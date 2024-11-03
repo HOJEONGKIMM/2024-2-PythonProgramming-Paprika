@@ -72,3 +72,57 @@ function updateDirectionOptions() {
         });
     }
 }
+
+// 혼잡도 데이터를 가져오는 함수
+async function fetchCongestionData(station, line, direction, time, dayType) {
+    try {
+        const response = await fetch(`/api/getCongestion?station=${station}&line=${line}&direction=${direction}&time=${time}&dayType=${dayType}`);
+        const data = await response.json();
+        
+        document.querySelector('.contents-text .fw-bold:nth-of-type(1)').innerText = `${data.current}%`;
+        document.querySelector('.contents-text .fw-bold:nth-of-type(2)').innerText = `${data.previous}%`;
+        document.querySelector('.contents-text .fw-bold:nth-of-type(3)').innerText = `${data.next}%`;
+    } catch (error) {
+        console.error('Error fetching congestion data:', error);
+    }
+}
+
+// 이벤트 핸들러 (버튼 클릭 시)
+// 혼잡도 데이터를 가져오는 함수
+async function fetchCongestionData(station, line, direction, time, dayType) {
+    try {
+        const response = await fetch(`/api/getCongestion?station=${station}&line=${line}&direction=${direction}&time=${time}&dayType=${dayType}`);
+        const data = await response.json();
+        
+        document.querySelector('.contents-text .fw-bold:nth-of-type(1)').innerText = `${data.current}%`;
+        document.querySelector('.contents-text .fw-bold:nth-of-type(2)').innerText = `${data.previous}%`;
+        document.querySelector('.contents-text .fw-bold:nth-of-type(3)').innerText = `${data.next}%`;
+    } catch (error) {
+        console.error('Error fetching congestion data:', error);
+    }
+}
+
+// 이벤트 핸들러 (버튼 클릭 시)
+document.getElementById('fetch-button').addEventListener('click', () => {
+    const station = document.getElementById('station-select').value;
+    const line = document.getElementById('line-select').value;
+    const direction = document.getElementById('direction-select').value;
+    const dayType = document.getElementById('day-type-select').value;
+    const timeSelect = document.getElementById('time-select').value; // "5시" 형식
+    const minuteSelect = document.getElementById('minute-select').value; // "00분" 형식
+
+    // "5시"에서 숫자 부분만 추출 -> "5"
+    const timeValue = timeSelect.replace('시', '');
+    // "00분"에서 숫자 부분만 추출 -> "00"
+    const minuteValue = minuteSelect.replace('분', '');
+
+    // 시간을 "HH:MM" 형식으로 조합
+    const time = `${timeValue}:${minuteValue}`;
+
+    // 입력 검증 후 데이터 가져오기
+    if (station && line && direction && dayType && timeSelect && minuteSelect) {
+        fetchCongestionData(station, line, direction, time, dayType);
+    } else {
+        alert('모든 입력값을 선택해 주세요.');
+    }
+});
