@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지하철 혼잡도 예측 시스템</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="p-5 bg-light">
+    <div class="container bg-white p-4 rounded shadow-sm">
+        <h3 class="mb-4">지하철 혼잡도 예측 시스템</h3>
+        <div class="row g-1 mb-3">
+            <div class="col">
+                <div class="dropdown-label">
+                    <i class="bi bi-train-front"></i>
+                    <select id="line-select" class="form-select" onchange="updateStationOptions(); updateDirectionOptions();">
+                        <option selected>호선 선택</option>
+                        <option value="1">1호선</option>
+                        <option value="2">2호선</option>
+                        <option value="3">3호선</option>
+                        <option value="4">4호선</option>
+                        <option value="5">5호선</option>
+                        <option value="6">6호선</option>
+                        <option value="7">7호선</option>
+                        <option value="8">8호선</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="dropdown-label">
+                    <i class="bi bi-geo-alt"></i>
+                    <select id="station-select" class="form-select">
+                        <option selected>출발역 선택</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="dropdown-label">
+                    <i class="bi bi-arrow-left-right"></i>
+                    <select id="direction-select" class="form-select">
+                        <option selected>상/하선 선택</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="dropdown-label">
+                    <i class="bi bi-calendar-event"></i>
+                    <select id="day-type-select" class="form-select">
+                        <option selected>주말/평일 선택</option>
+                        <option value="weekday">평일</option>
+                        <option value="weekend">주말</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="dropdown-label">
+                    <i class="bi bi-clock"></i>
+                    <select id="time-select" class="form-select">
+                        <option selected>시간 선택</option>
+                        <option>5시</option>
+                        <option>6시</option>
+                        <option>7시</option>
+                        <option>8시</option>
+                        <option>9시</option>
+                        <option>10시</option>
+                        <option>11시</option>
+                        <option>12시</option>
+                        <option>13시</option>
+                        <option>14시</option>
+                        <option>15시</option>
+                        <option>16시</option>
+                        <option>17시</option>
+                        <option>18시</option>
+                        <option>19시</option>
+                        <option>20시</option>
+                        <option>21시</option>
+                        <option>22시</option>
+                        <option>23시</option>
+                        <option>00시</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="dropdown-label">
+                    <i class="bi bi-hourglass-split"></i>
+                    <select id="minute-select" class="form-select">
+                        <option selected>분 선택</option>
+                        <option>00분</option>
+                        <option>30분</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 mx-auto">
+            <button id="fetch-button" class="btn btn-primary w-100">입력</button>
+        </div>
+        <div class="contents-text">
+            <p class="mt-4">예상 혼잡도는 <span class="fw-bold">___%</span> 입니다.</p>
+            <p>입력한 시간의 30분 전 혼잡도는 <span class="fw-bold">___%</span> 입니다.</p>
+            <p>입력한 시간의 30분 후 혼잡도는 <span class="fw-bold">___%</span> 입니다.</p>
+            <p class="info-text mt-3">혼잡도는 정원대비 승차인원으로, 승차인과 좌석수가 일치할 경우를 혼잡도 34%로 산정했습니다.</p>
+        </div>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>
