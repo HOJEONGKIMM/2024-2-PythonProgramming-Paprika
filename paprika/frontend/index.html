@@ -97,12 +97,51 @@
             <button id="fetch-button" class="btn btn-primary w-100">입력</button>
         </div>
         <div class="contents-text">
-            <p class="mt-4">예상 혼잡도는 <span class="fw-bold">___%</span> 입니다.</p>
-            <p>입력한 시간의 30분 전 혼잡도는 <span class="fw-bold">___%</span> 입니다.</p>
-            <p>입력한 시간의 30분 후 혼잡도는 <span class="fw-bold">___%</span> 입니다.</p>
-            <p class="info-text mt-3">혼잡도는 정원대비 승차인원으로, 승차인과 좌석수가 일치할 경우를 혼잡도 34%로 산정했습니다.</p>
+            <p class="mt-4">예상 혼잡도는 <span class="fw-bold">___</span> 입니다.</p>
         </div>
-    </div>
-    <script src="/static/script.js"></script>
-</body>
+         <!-- 혼잡도 기준 섹션 -->
+        <div class="mt-5">
+            <h4 class="mb-3">지하철 혼잡도 기준</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="text-center">단계</th>
+                            <th scope="col" class="text-center">정규화 값 범위</th>
+                            <th scope="col" class="text-center">혼잡도 범위 (%)</th>
+                            <th scope="col" class="text-center">설명</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center" style="background-color: #d4edda;">여유 단계</td>
+                            <td class="text-center">0 ≤ 값 ≤ 8</td>
+                            <td class="text-center">0% ~ 40%</td>
+                            <td>여유로운 이동이 가능합니다.</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" style="background-color: #ffeeba;">보통 단계</td>
+                            <td class="text-center">8 < 값 ≤ 13</td>
+                            <td class="text-center">40% ~ 65%</td>
+                            <td>보통 이동이 가능합니다.</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" style="background-color: #f8d7da;">주의 단계</td>
+                            <td class="text-center">13 < 값 ≤ 15</td>
+                            <td class="text-center">65% ~ 75%</td>
+                            <td>이동 시 불편함이 있습니다.</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" style="background-color: #f5c6cb; color: white;">혼잡 단계</td>
+                            <td class="text-center">값 > 15</td>
+                            <td class="text-center">75% 이상</td>
+                            <td>열차 내 이동이 힘듭니다.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <script src="/static/script.js"></script>
+
+    </body>
 </html>

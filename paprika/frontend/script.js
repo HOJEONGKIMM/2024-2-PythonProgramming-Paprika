@@ -1,13 +1,13 @@
 // 호선과 역 정보
 const stationsByLine = {
-    "1": ["청량리역", "제기동역", "신설동역", "동묘앞역", "동대문역", "종로5가역", "종로3가역", "종각역", "시청역", "서울역"],
-    "2": ["성수역", "뚝섬역", "한양대역", "왕십리역", "상왕십리역", "신당역", "동대문역사문화공원역", "을지로4가역", "을지로3가역", "을지로입구역",
+    "1": ["청량리", "제기동", "신설동", "동묘앞", "동대문", "종로5가", "종로3가", "종각", "시청", "서울"],
+    "2": ["성수", "뚝섬", "한양대", "왕십리", "상왕십리", "신당", "동대문역사문화공원", "을지로4가", "을지로3가", "을지로입구",
         "시청역", "충정로역", "아현역", "이대역", "신촌(지하)역", "홍대입구역", "합정역", "당산역", "영등포구청역", "문래역", "신도림역",
         "대림역", "구로디지털단지역", "신대방역", "신림역", "봉천역", "서울대입구역", "낙성대역", "사당역", "방배역", "서초역", "교대역", 
         "강남역", "역삼역", "선릉역", "삼성역", "종합운동장역", "잠실새내역", "잠실역", "잠실나루역", "강변역", "구의역", "건대입구역", 
         "성수역", "용답역", "신답역", "용두역", "신설동역"],
-    "3": ["지축역", "구파발역", "연신내역", "불광역", "녹번역", "홍제역", "무악재역", "독립문역", "경복궁역", "안국역", "종로3가역",
-        "을지로3가역", "충무로역", "동대입구역", "약수역", "금호역", "옥수역", "압구정역", "신사역", "잠원역", "고속터미널역", 
+    "3": ["지축", "구파발", "연신내", "불광", "녹번", "홍제", "무악재", "독립문", "경복궁", "안국", "종로3가",
+        "을지로3가", "충무로", "동대입구", "약수", "금호", "옥수", "압구정", "신사", "잠원역", "고속터미널역", 
         "교대역", "남부터미널역", "양재역", "매봉역", "도곡역", "대치역", "학여울역", "대청역", "일원역", "수서역", "가락시장역",
         "경찰병원역", "오금역"],
     "4": ["당고개역", "상계역", "노원역", "창동역", "쌍문역", "수유역", "미아역", "미아사거리역", "길음역", "성신여대입구역", 
@@ -82,22 +82,32 @@ function updateDirectionOptions() {
 
 // 혼잡도 API 호출 및 데이터 업데이트
 async function fetchCongestionData(station, line, direction, time, dayType) {
-    try {
-        const response = await fetch(`http://127.0.0.1:8000/api/getCongestion?station=${station}&line=${line}&direction=${direction}&time=${time}&dayType=${dayType}`);
-        
-        if (!response.ok) {
-            throw new Error("API 호출 실패");
-        }
-
+    // API 요청
+    const response = await fetch(`http://127.0.0.1:8000/api/getCongestion?station=${station}&line=${line}&direction=${direction}&time=${time}&dayType=${dayType}`);
+    
+    // API 요청 성공 여부 확인
+    if (response.ok) {
         const data = await response.json();
 
-        document.querySelector('.contents-text .fw-bold:nth-of-type(1)').innerText = `${data.current.toFixed(2)}%`;
-        document.querySelector('.contents-text .fw-bold:nth-of-type(2)').innerText = `${data.previous.toFixed(2)}%`;
-        document.querySelector('.contents-text .fw-bold:nth-of-type(3)').innerText = `${data.next.toFixed(2)}%`;
-    } catch (error) {
-        console.error("Error fetching congestion data:", error);
+        // 현재 혼잡도 업데이트
+        const currentCongestion = data.current !== null ? `${data.current.toFixed(2)}` : "데이터 없음";
+        document.querySelector('.contents-text .fw-bold:nth-of-type(1)').innerText = currentCongestion;
+
+        // 30분 전 혼잡도 업데이트
+        const previousCongestion = data.previous !== null ? `${data.previous.toFixed(2)}` : "데이터 없음";
+        document.querySelector('.contents-text .fw-bold:nth-of-type(2)').innerText = previousCongestion;
+
+        // 30분 후 혼잡도 업데이트
+        const nextCongestion = data.next !== null ? `${data.next.toFixed(2)}%` : "데이터 없음";
+        document.querySelector('.contents-text .fw-bold:nth-of-type(3)').innerText = nextCongestion;
+    } else {
+        // API 요청 실패 시 처리
+        document.querySelector('.contents-text .fw-bold:nth-of-type(1)').innerText = "API 호출 실패";
+        document.querySelector('.contents-text .fw-bold:nth-of-type(2)').innerText = "API 호출 실패";
+        document.querySelector('.contents-text .fw-bold:nth-of-type(3)').innerText = "API 호출 실패";
     }
 }
+
 
 // 입력 값 검증 후 혼잡도 데이터 요청
 document.getElementById("fetch-button").addEventListener("click", () => {
@@ -108,8 +118,10 @@ document.getElementById("fetch-button").addEventListener("click", () => {
     const timeSelect = document.getElementById("time-select").value;
     const minuteSelect = document.getElementById("minute-select").value;
 
+    // 시간 입력값 포맷팅 (예: "05:30")
     const time = `${timeSelect.replace("시", "")}:${minuteSelect.replace("분", "")}`;
 
+    // 입력값 검증
     if (station && line && direction && dayType && time) {
         fetchCongestionData(station, line, direction, time, dayType);
     } else {
