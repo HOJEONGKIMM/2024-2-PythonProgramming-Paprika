@@ -1,0 +1,21 @@
+.info-text {
+    font-style: italic;
+    color: #555;
+}
+.mb-4 {
+    text-align: center;
+}
+.btn-primary {
+    margin-top: 10px;
+}
+.contents-text {
+    text-align: center;
+}
+.dropdown-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.form-select {
+    width: 100%;
+}
