@@ -16,7 +16,7 @@
 여유 단계 (0 ~ 8): 여유로운 이동이 가능합니다.    
 보통 단계 (8 ~ 13): 큰 불편 없이 이동이 가능합니다.    
 주의 단계 (13 ~ 15): 이동이 다소 불편할 수 있습니다.    
-혼잡 단계 (15 이상): 이동이 거의 불가능한 상황입니다.
+혼잡 단계 (15 이상): 이동이 힘든 상황입니다.
 
 ### 서비스 개발 목적
 1. 데이터와의 일치성
@@ -29,9 +29,9 @@
 혼잡도를 명확한 단계로 나눔으로써 사용자가 혼잡한 시간을 피해 최적의 선택을 할 수 있습니다.
 
 ### 작동 원리
+
 데이터 전처리:    
 LSTM 모델 성능 향상을 위해 MinMaxScaler를 사용한 정규화    
-데이터의 실제 범위(0~20)에 맞춘 혼잡도 분류 기준 조정
 
 모델 학습:    
 LSTM 기반 신경망을 사용하여 시계열 데이터를 예측    
@@ -50,22 +50,30 @@ RMSE를 최소화하는 방향으로 학습 진행
 ### 설치 방법
 1. 레포지토리 클론
 
-```git clone https://github.com/HOJEONGKIMM/2024-2-PythonProgramming-Paprika.git```
+```
+git clone https://github.com/HOJEONGKIMM/2024-2-PythonProgramming-Paprika.git
 
-```cd 2024-2-PythonProgramming-Paprika```
-
+cd 2024-2-PythonProgramming-Paprika
+```
 
 2. 가상 환경 생성 / 활성화
 
-```python -m venv venv```
+```
+python -m venv venv
 
-```source venv/bin/activate  # macOS/Linux```     
-```venv\Scripts\activate  # Windows```
+source venv/bin/activate  # macOS/Linux    
+venv\Scripts\activate  # Windows
+```
 
 3. 의존성 설치
 
-```pip install -r requirements.txt```
+```
+pip install -r requirements.txt
+```
 
 4. 서버 실행
 
-```uvicorn main:app --reload```
+```
+uvicorn main:app --reload
+```
+
